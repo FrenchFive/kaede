@@ -1,0 +1,18 @@
+import torch
+from diffusers import StableDiffusionXLImg2ImgPipeline
+from diffusers.utils import load_image
+
+SDXL_REFINER_MODEL_PATH = "G:/Chan/Documents/zKaede/KAEDE-V2/stable-diffusion-xl-refiner-1.0"
+
+pipe = StableDiffusionXLImg2ImgPipeline.from_pretrained(
+    SDXL_REFINER_MODEL_PATH , torch_dtype=torch.float16
+).to("cuda")
+
+url = "G:/Chan/Documents/zKaede/KAEDE-V2/OUTPUT\\2023-10-22_15-25-46_Taylor Swift swingin_933606_quack_five.png"
+
+init_image = load_image(url).convert("RGB")
+
+prompt = "Taylor Swift playing tennis"
+
+image = pipe(prompt, image=init_image).images[0]
+image.save("G:/Chan/Documents/zKaede/KAEDE-V2/OUTPUT/image.png")
